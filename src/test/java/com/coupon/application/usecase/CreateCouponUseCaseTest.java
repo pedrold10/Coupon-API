@@ -9,6 +9,10 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -54,9 +58,17 @@ public class CreateCouponUseCaseTest {
 
     static class InMemoryCouponRepository implements CouponRepository {
 
+        private final Map<UUID, Coupon> db = new HashMap<>();
+
         @Override
         public Coupon save(Coupon coupon) {
+            db.put(coupon.getId(), coupon);
             return coupon;
+        }
+
+        @Override
+        public Optional<Coupon> findById(UUID id) {
+            return Optional.ofNullable(db.get(id));
         }
     }
 }
