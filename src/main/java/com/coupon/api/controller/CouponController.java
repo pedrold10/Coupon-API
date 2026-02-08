@@ -6,6 +6,8 @@ import com.coupon.application.dto.CouponOutput;
 import com.coupon.application.dto.CreateCouponCommand;
 import com.coupon.application.usecase.CreateCouponUseCase;
 import com.coupon.application.usecase.DeleteCouponUseCase;
+import com.coupon.application.usecase.GetCouponUseCase;
+import com.coupon.domain.model.Coupon;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,10 +20,12 @@ public class CouponController {
 
     private final CreateCouponUseCase createCouponUseCase;
     private final DeleteCouponUseCase deleteCouponUseCase;
+    private final GetCouponUseCase getCouponUseCase;
 
-    public CouponController(CreateCouponUseCase createCouponUseCase, DeleteCouponUseCase deleteCouponUseCase) {
+    public CouponController(CreateCouponUseCase createCouponUseCase, DeleteCouponUseCase deleteCouponUseCase, GetCouponUseCase getCouponUseCase) {
         this.createCouponUseCase = createCouponUseCase;
         this.deleteCouponUseCase = deleteCouponUseCase;
+        this.getCouponUseCase = getCouponUseCase;
     }
 
     @PostMapping
@@ -56,5 +60,24 @@ public class CouponController {
         deleteCouponUseCase.execute(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CouponResponse> getById(@PathVariable UUID id) {
+        CouponOutput output = getCouponUseCase.execute(id);
+
+        CouponResponse response = new CouponResponse(
+                output.getId(),
+                output.getCode(),
+                output.getDescription(),
+                output.getDiscountValue(),
+                output.getExpirationDate(),
+                output.getStatus(),
+                output.isPublished(),
+                output.isRedeemed()
+        );
+
+        return ResponseEntity.ok(response);
+    }
+
 
 }

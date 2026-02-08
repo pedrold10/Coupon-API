@@ -3,6 +3,7 @@ package com.coupon.config;
 import com.coupon.application.port.CouponRepository;
 import com.coupon.application.usecase.CreateCouponUseCase;
 import com.coupon.application.usecase.DeleteCouponUseCase;
+import com.coupon.application.usecase.GetCouponUseCase;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -16,4 +17,10 @@ public class UseCaseConfig {
     public DeleteCouponUseCase deleteCouponUseCase(CouponRepository couponRepository) {
         return new DeleteCouponUseCase(couponRepository);
     }
+
+    @Bean
+    public GetCouponUseCase getCouponUseCase(CouponRepository repo) {
+        return new GetCouponUseCase(repo);
+    }
+
 }

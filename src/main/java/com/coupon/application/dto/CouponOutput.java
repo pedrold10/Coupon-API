@@ -1,5 +1,6 @@
 package com.coupon.application.dto;
 
+import com.coupon.domain.model.Coupon;
 import com.coupon.domain.model.CouponStatus;
 
 import java.math.BigDecimal;
@@ -59,4 +60,18 @@ public class CouponOutput {
     public boolean isRedeemed() {
         return redeemed;
     }
+
+    public static CouponOutput from(Coupon coupon) {
+        return new CouponOutput(
+                coupon.getId(),
+                coupon.getCode().getValue(),
+                coupon.getDescription(),
+                coupon.getDiscountValue().getValue(),
+                coupon.getExpirationDate(),
+                coupon.getStatus(),
+                coupon.isPublished(),
+                coupon.isRedeemed()
+        );
+    }
+
 }
