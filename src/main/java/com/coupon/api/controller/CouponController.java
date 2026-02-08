@@ -5,21 +5,23 @@ import com.coupon.api.dto.CreateCouponRequest;
 import com.coupon.application.dto.CouponOutput;
 import com.coupon.application.dto.CreateCouponCommand;
 import com.coupon.application.usecase.CreateCouponUseCase;
+import com.coupon.application.usecase.DeleteCouponUseCase;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/coupon")
 public class CouponController {
 
     private final CreateCouponUseCase createCouponUseCase;
+    private final DeleteCouponUseCase deleteCouponUseCase;
 
-    public CouponController(CreateCouponUseCase createCouponUseCase) {
+    public CouponController(CreateCouponUseCase createCouponUseCase, DeleteCouponUseCase deleteCouponUseCase) {
         this.createCouponUseCase = createCouponUseCase;
+        this.deleteCouponUseCase = deleteCouponUseCase;
     }
 
     @PostMapping
@@ -48,4 +50,11 @@ public class CouponController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+        deleteCouponUseCase.execute(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }

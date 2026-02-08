@@ -15,7 +15,7 @@ public class Coupon {
 
     private CouponStatus status;
     private final boolean published;
-    private final boolean redeemed;
+    private boolean redeemed;
 
     private Coupon(UUID id, CouponCode code, String description, DiscountValue discountValue, Instant expirationDate, boolean published){
         this.id = id;
@@ -49,6 +49,23 @@ public class Coupon {
                 published
         );
     }
+
+    public static Coupon rehydrate(
+            UUID id,
+            CouponCode code,
+            String description,
+            DiscountValue discountValue,
+            Instant expirationDate,
+            boolean published,
+            boolean redeemed,
+            CouponStatus status
+    ) {
+        Coupon c = new Coupon(id, code, description, discountValue, expirationDate, published);
+        c.status = status;
+        c.redeemed = redeemed;
+        return c;
+    }
+
 
     public void delete() {
         if (this.status == CouponStatus.DELETED) {
@@ -88,4 +105,5 @@ public class Coupon {
     public boolean isRedeemed() {
         return redeemed;
     }
+
 }

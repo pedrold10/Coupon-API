@@ -19,6 +19,7 @@ public class CouponEntity {
 
     private String description;
 
+    @Column(precision = 10, scale = 2)
     private BigDecimal discountValue;
 
     private Instant expirationDate;
@@ -47,31 +48,63 @@ public class CouponEntity {
         return id;
     }
 
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
     public String getCode() {
         return code;
     }
 
-    public BigDecimal getDiscountValue() {
-        return discountValue;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getDescription() {
         return description;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public Instant getExpirationDate() {
         return expirationDate;
+    }
+
+    public void setExpirationDate(Instant expirationDate) {
+        this.expirationDate = expirationDate;
+    }
+
+    public BigDecimal getDiscountValue() {
+        return discountValue;
+    }
+
+    public void setDiscountValue(BigDecimal discountValue) {
+        this.discountValue = discountValue;
     }
 
     public CouponStatus getStatus() {
         return status;
     }
 
+    public void setStatus(CouponStatus status) {
+        this.status = status;
+    }
+
     public boolean isPublished() {
         return published;
     }
 
+    public void setPublished(boolean published) {
+        this.published = published;
+    }
+
     public boolean isRedeemed() {
         return redeemed;
+    }
+
+    public void setRedeemed(boolean redeemed) {
+        this.redeemed = redeemed;
     }
 }
