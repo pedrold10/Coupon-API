@@ -1,7 +1,9 @@
 package com.coupon.domain.exception;
 
+import java.util.UUID;
+
 public class CouponNotFoundException extends RuntimeException{
-    public CouponNotFoundException() {
-        super("Cupom não encontrado!");
+    public CouponNotFoundException(UUID id) {
+        super("Cupom não encontrado: " + id);
     }
 }
